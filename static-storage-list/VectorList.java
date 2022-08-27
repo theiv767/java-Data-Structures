@@ -57,7 +57,7 @@ public class VectorList {
 
     //---------------------------
     private void incrementSize() {
-        Object[] aux = new Object[cont + (cont / 2)];
+        Object[] aux = new Object[(int) cont + (cont / 2)];
         for (int i = 0; i < cont; i++) {
             aux[i] = this.elements[i];
         }
