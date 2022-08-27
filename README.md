@@ -1,2 +1,2 @@
 # Lists
-classes de listas em java
+trabalho da disciplina de estrutura de dados: listas em java
