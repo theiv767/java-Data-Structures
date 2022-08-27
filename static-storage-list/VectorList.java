@@ -3,13 +3,18 @@ public class VectorList {
     private int cont = 0;
 
     VectorList() {
-        elements = new Object[10];
+        elements = new Object[10]; //standard initial lenght
     }
 
     VectorList(int n) {
-        elements = new Object[n];
+        elements = new Object[n]; // initial lenght
     }
 
+
+    /**
+     *Adds a new item to the list
+     * @param value new item
+     */
     public void add(int value) {
         if (cont == this.elements.length - 1) incrementSize();
 
@@ -17,6 +22,13 @@ public class VectorList {
         cont++;
     }
 
+
+    /**
+     * removes an item from de list
+     * @param index position of the item that will be removed
+     * @throws IndexOutOfBoundsException
+     * @throws IllegalArgumentException
+     */
     public void remove(int index) throws IndexOutOfBoundsException, IllegalArgumentException {
         if (cont <= 0) {
             throw new IllegalArgumentException("Illegal Argument Exception");
@@ -30,6 +42,9 @@ public class VectorList {
     }
 
 
+    /**
+     * clear all positions from the VectorList
+     */
     public void clearAll() {
         cont = 0;
         this.elements = new Object[10];
