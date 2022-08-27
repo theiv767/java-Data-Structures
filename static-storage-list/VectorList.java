@@ -12,7 +12,8 @@ public class VectorList {
 
 
     /**
-     *Adds a new item to the list
+     * Adds a new item to the list
+     *
      * @param value new item
      */
     public void add(int value) {
@@ -25,15 +26,17 @@ public class VectorList {
 
     /**
      * removes an item from de list
+     *
      * @param index position of the item that will be removed
      * @throws IndexOutOfBoundsException
      * @throws IllegalArgumentException
      */
     public void remove(int index) throws IndexOutOfBoundsException, IllegalArgumentException {
-        if (cont <= 0) {
+        if (cont <= 0)
             throw new IllegalArgumentException("Illegal Argument Exception");
-        }
-        if (index <= cont) throw new IndexOutOfBoundsException("index out of bounds");
+
+        if (index <= cont)
+            throw new IndexOutOfBoundsException("index out of bounds");
 
         cont--;
         for (int i = index; i < cont; i++) {
