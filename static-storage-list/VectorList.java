@@ -10,11 +10,20 @@ public class VectorList<E> {
         elements = new Object[n]; // initial lenght
     }
 
-
+    /**
+     * get item
+     * @param index position
+     * @return item
+     */
     public E get(int index) {
         return (E) this.elements[index];
     }
 
+    /**
+     * set item
+     * @param index position
+     * @param value new item value
+     */
     public void set(int index, E value) {
         this.elements[index] = value;
     }
@@ -31,7 +40,11 @@ public class VectorList<E> {
         cont++;
     }
 
-
+    /**
+     *  find the position of the item
+     * @param value item to find position
+     * @return item position or -1 if item does not exist
+     */
     public int indexOf(E value) {
         for (int i = 0; i < cont; i++) {
             if (this.elements[i].equals(value))
@@ -60,7 +73,7 @@ public class VectorList<E> {
 
 
     /**
-     * removes an item from de list
+     * removes a list item by position
      *
      * @param index position of the item that will be removed
      * @throws IndexOutOfBoundsException
@@ -79,6 +92,11 @@ public class VectorList<E> {
         cont--;
     }
 
+    /**
+     * removes a list item by value
+     * @param value item value
+     * @throws IllegalArgumentException
+     */
     public void remove(E value) throws IllegalArgumentException {
         if (cont <= 0)
             throw new IllegalArgumentException("Illegal Argument Exception");
@@ -113,7 +131,11 @@ public class VectorList<E> {
 
     }
 
-
+    /**
+     * checks to see if the item exists
+     * @param value item
+     * @return
+     */
     public boolean contains(E value) {
         for (Object i : this.elements) {
             if (value.equals(i))
