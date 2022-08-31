@@ -1,4 +1,4 @@
-public class VectorList {
+public class VectorList<E> {
     private Object[] elements;
     private int cont = 0;
 
@@ -11,15 +11,50 @@ public class VectorList {
     }
 
 
+    public E get(int index) {
+        return (E) this.elements[index];
+    }
+
+    public void set(int index, E value) {
+        this.elements[index] = value;
+    }
+
     /**
      * Adds a new item to the list
      *
      * @param value new item
      */
-    public void add(int value) {
+    public void add(E value) {
         if (cont == this.elements.length - 1) incrementSize();
 
         elements[cont] = value;
+        cont++;
+    }
+
+
+    public int indexOf(E value) {
+        for (int i = 0; i < cont; i++) {
+            if (this.elements[i].equals(value))
+                return i;
+        }
+        return -1;
+    }
+
+
+    /**
+     * adds an item to a position in the list
+     *
+     * @param index position
+     * @param value new item
+     */
+    public void add(int index, E value) {
+        if (cont == this.elements.length - 1) incrementSize();
+
+        for (int i = cont; i > index; i--) {
+            this.elements[i] = this.elements[i - 1];
+        }
+
+        this.elements[index] = value;
         cont++;
     }
 
@@ -35,12 +70,26 @@ public class VectorList {
         if (cont <= 0)
             throw new IllegalArgumentException("Illegal Argument Exception");
 
-        if (index <= cont)
+        if (index >= cont)
             throw new IndexOutOfBoundsException("index out of bounds");
 
-        cont--;
         for (int i = index; i < cont; i++) {
             this.elements[i] = this.elements[i + 1];
+        }
+        cont--;
+    }
+
+    public void remove(E value) throws IllegalArgumentException {
+        if (cont <= 0)
+            throw new IllegalArgumentException("Illegal Argument Exception");
+
+        for (int i = 0; i < cont; i++) {
+            if (this.elements[i].equals(value)) {
+                for (int j = i; j < cont; j++) {
+                    this.elements[j] = this.elements[j + 1];
+                }
+                cont--;
+            }
         }
     }
 
@@ -48,10 +97,30 @@ public class VectorList {
     /**
      * clear all positions from the VectorList
      */
-    public void clearAll() {
+    public void clear() {
         cont = 0;
         this.elements = new Object[10];
 
+    }
+
+    /**
+     * return length
+     *
+     * @return length
+     */
+    public int size() {
+        return cont;
+
+    }
+
+
+    public boolean contains(E value) {
+        for (Object i : this.elements) {
+            if (value.equals(i))
+                return true;
+        }
+
+        return false;
     }
 
 
@@ -67,11 +136,18 @@ public class VectorList {
     @Override
     public String toString() {
         String elementsString = "[";
-        for (int i = 0; i < cont; i++)
-            elementsString += (i == cont - 1) ? this.elements[i] : this.elements[i] + ", ";
-
+        for (int i = 0; i < cont; i++) {
+            String adds = "";
+            if (elements[i].getClass() == String.class) {
+                adds += "\"";
+                adds += this.elements[i];
+                adds += "\"";
+            } else {
+                adds += this.elements[i] + "";
+            }
+            elementsString += (i == cont - 1) ? adds : adds + ", ";
+        }
         elementsString += "]";
         return elementsString;
     }
 }
-
