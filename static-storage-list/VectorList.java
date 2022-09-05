@@ -1,3 +1,4 @@
+@SuppressWarnings("unchecked")
 public class VectorList<E> {
     private Object[] elements;
     private int cont = 0;
