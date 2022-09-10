@@ -1,13 +1,13 @@
 @SuppressWarnings("unchecked")
 public class ChainList<E> {
     int cont = 0;
-    Node firstElement;
-    Node lastElement;
+    private Node firstElement;
+    private Node lastElement;
 
 
     ChainList() {
         firstElement = new Node(null);
-        lastElement = firstElement.getNextItem();
+        lastElement = firstElement.nextItem;
     }
 
 
@@ -21,10 +21,10 @@ public class ChainList<E> {
             if (n == index) {
                 break;
             }
-            currentElement = currentElement.getNextItem();
+            currentElement = currentElement.nextItem;
             n++;
         }
-        return (E) currentElement.getValue();
+        return (E) currentElement.value;
 
     }
 
@@ -38,7 +38,7 @@ public class ChainList<E> {
             if (n == index) {
                 break;
             }
-            currentElement = currentElement.getNextItem();
+            currentElement = currentElement.nextItem;
             n++;
         }
         currentElement.value = value;
@@ -59,12 +59,41 @@ public class ChainList<E> {
 
     }
 
+    public void add(int index, E value) throws IndexOutOfBoundsException{
+        if (index > this.cont)
+            throw new IndexOutOfBoundsException("index out of bounds exception");
+
+        this.cont++;
+        Node adds = new Node(value);
+
+        if (index == this.cont) {
+            this.add(value);
+            return;
+        }
+        if (index == 0){
+            adds.nextItem = firstElement;
+            firstElement = adds;
+            return;
+        }
+
+        Node currentElement = firstElement;
+        for(int i=0; i<index-1; i++){
+            currentElement = currentElement.nextItem;
+
+        }
+
+        adds.nextItem = currentElement.nextItem;
+        currentElement.nextItem = adds;
+
+    }
+
     public void remove(int index) throws IndexOutOfBoundsException{
         if (index >= this.cont || index < 0)
             throw new IndexOutOfBoundsException("index out of bounds exception");
 
+        this.cont--;
         if(index == 0){
-            firstElement = firstElement.getNextItem();
+            firstElement = firstElement.nextItem;
             return;
         }
 
@@ -74,23 +103,44 @@ public class ChainList<E> {
             if (n == index-1) {
                 break;
             }
-            currentElement = currentElement.getNextItem();
+            currentElement = currentElement.nextItem;
             n++;
         }
-        currentElement.nextItem = currentElement.getNextItem().getNextItem();
+        currentElement.nextItem = currentElement.nextItem.nextItem;
+
+    }
+
+    public void remove(E value){
+
+        if(firstElement.value == value){
+            firstElement = firstElement.nextItem;
+            this.cont--;
+            return;
+        }
+
+        Node currentElement = firstElement;
+
+        while(!currentElement.nextItem.value.equals(value)){
+            currentElement = currentElement.nextItem;
+            if (currentElement.nextItem == null)
+                return;
+
+        }
+
         this.cont--;
+        currentElement.nextItem = currentElement.nextItem.nextItem;
     }
 
 
     public int indexOf(E value) {
         Node currentElement = firstElement;
         int n = 0;
-        while (currentElement.getValue() != value) {
-            currentElement = currentElement.getNextItem();
+        while (currentElement.value != value) {
             n++;
-            if (n >= cont) {
+            if (n >= this.cont) {
                 return -1;
             }
+            currentElement = currentElement.nextItem;
         }
         return n;
     }
@@ -107,36 +157,21 @@ public class ChainList<E> {
     }
 
     public boolean contains(E value){
-        Node currentElement = firstElement;
-        for(int i=0; i<this.cont-1; i++){
+        if(this.indexOf(value) == -1)
+            return false;
 
-            if(currentElement.getValue().equals(value)) {
-                return true;
-            }
-            currentElement = currentElement.getNextItem();
-
-        }
-
-        return false;
+        return true;
     }
 
 
     // aux ------------------------
-    class Node {
-        private Object value;
-        private Node nextItem;
+    private class Node {
+        Object value;
+        Node nextItem;
 
         Node(Object value) {
             this.value = value;
             nextItem = null;
-        }
-
-        public E getValue() {
-            return (E)value;
-        }
-
-        public Node getNextItem() {
-            return nextItem;
         }
 
         @Override
@@ -151,7 +186,7 @@ public class ChainList<E> {
         Node i = firstElement;
         while (i != null) {
             String adds = "";
-            if (i.getValue().getClass() == String.class) {
+            if (i.value.getClass() == String.class) {
                 adds += "\"";
                 adds += i;
                 adds += "\"";
@@ -159,8 +194,8 @@ public class ChainList<E> {
                 adds += i + "";
             }
 
-            showString += (i.getNextItem() != null) ? adds + ", " : adds + "";
-            i = i.getNextItem();
+            showString += (i.nextItem != null) ? adds + ", " : adds + "";
+            i = i.nextItem;
         }
         showString += "]";
         return showString;
