@@ -138,12 +138,10 @@ public class VectorList<E> {
      * @return
      */
     public boolean contains(E value) {
-        for (Object i : this.elements) {
-            if (value.equals(i))
-                return true;
-        }
+       if(indexOf(value) == -1)
+           return false;
 
-        return false;
+       return true;
     }
 
 
