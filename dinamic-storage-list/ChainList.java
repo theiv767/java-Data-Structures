@@ -164,7 +164,8 @@ public class ChainList<E> {
     }
 
 
-    // aux ------------------------
+    // ------------------------
+    
     private class Node {
         Object value;
         Node nextItem;
