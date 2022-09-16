@@ -1,5 +1,5 @@
 @SuppressWarnings("unchecked")
-public class ChainList<E> {
+public class ChainList<E> implements List<E>{
     int cont = 0;
     private Node firstElement;
     private Node lastElement;
@@ -10,7 +10,7 @@ public class ChainList<E> {
         lastElement = firstElement.nextItem;
     }
 
-
+    @Override
     public E get(int index) throws IndexOutOfBoundsException {
         if (index >= this.cont || index < 0)
             throw new IndexOutOfBoundsException("index out of bounds exception");
@@ -28,6 +28,7 @@ public class ChainList<E> {
 
     }
 
+    @Override
     public void set(int index, E value) throws IndexOutOfBoundsException{
         if (index >= this.cont || index < 0)
             throw new IndexOutOfBoundsException("index out of bounds exception");
@@ -45,6 +46,7 @@ public class ChainList<E> {
 
     }
 
+    @Override
     public void add(E value) {
         Node adds = new Node(value);
 
@@ -59,6 +61,7 @@ public class ChainList<E> {
 
     }
 
+    @Override
     public void add(int index, E value) throws IndexOutOfBoundsException{
         if (index > this.cont)
             throw new IndexOutOfBoundsException("index out of bounds exception");
@@ -87,6 +90,7 @@ public class ChainList<E> {
 
     }
 
+    @Override
     public void remove(int index) throws IndexOutOfBoundsException{
         if (index >= this.cont || index < 0)
             throw new IndexOutOfBoundsException("index out of bounds exception");
@@ -110,6 +114,7 @@ public class ChainList<E> {
 
     }
 
+    @Override
     public void remove(E value){
 
         if(firstElement.value == value){
@@ -131,7 +136,7 @@ public class ChainList<E> {
         currentElement.nextItem = currentElement.nextItem.nextItem;
     }
 
-
+    @Override
     public int indexOf(E value) {
         Node currentElement = firstElement;
         int n = 0;
@@ -145,17 +150,7 @@ public class ChainList<E> {
         return n;
     }
 
-    public void clear(){
-        this.cont = 0;
-        firstElement = null;
-        lastElement = firstElement;
-
-    }
-
-    public int size(){
-        return this.cont;
-    }
-
+    @Override
     public boolean contains(E value){
         if(this.indexOf(value) == -1)
             return false;
@@ -163,9 +158,22 @@ public class ChainList<E> {
         return true;
     }
 
+    @Override
+    public int size(){
+        return this.cont;
+    }
+
+    @Override
+    public void clear(){
+        this.cont = 0;
+        firstElement = null;
+        lastElement = firstElement;
+
+    }
+
 
     // ------------------------
-    
+
     private class Node {
         Object value;
         Node nextItem;

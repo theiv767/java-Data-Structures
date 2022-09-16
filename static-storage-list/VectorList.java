@@ -1,5 +1,5 @@
 @SuppressWarnings("unchecked")
-public class VectorList<E> {
+public class VectorList<E> implements List<E>{
     private Object[] elements;
     private int cont = 0;
 
@@ -16,6 +16,7 @@ public class VectorList<E> {
      * @param index position
      * @return item
      */
+    @Override
     public E get(int index) {
         return (E) this.elements[index];
     }
@@ -25,6 +26,7 @@ public class VectorList<E> {
      * @param index position
      * @param value new item value
      */
+    @Override
     public void set(int index, E value) {
         this.elements[index] = value;
     }
@@ -34,6 +36,7 @@ public class VectorList<E> {
      *
      * @param value new item
      */
+    @Override
     public void add(E value) {
         if (cont == this.elements.length - 1) incrementSize();
 
@@ -42,25 +45,12 @@ public class VectorList<E> {
     }
 
     /**
-     *  find the position of the item
-     * @param value item to find position
-     * @return item position or -1 if item does not exist
-     */
-    public int indexOf(E value) {
-        for (int i = 0; i < cont; i++) {
-            if (this.elements[i].equals(value))
-                return i;
-        }
-        return -1;
-    }
-
-
-    /**
      * adds an item to a position in the list
      *
      * @param index position
      * @param value new item
      */
+    @Override
     public void add(int index, E value) {
         if (cont == this.elements.length - 1) incrementSize();
 
@@ -72,7 +62,6 @@ public class VectorList<E> {
         cont++;
     }
 
-
     /**
      * removes a list item by position
      *
@@ -80,6 +69,7 @@ public class VectorList<E> {
      * @throws IndexOutOfBoundsException
      * @throws IllegalArgumentException
      */
+    @Override
     public void remove(int index) throws IndexOutOfBoundsException, IllegalArgumentException {
         if (cont <= 0)
             throw new IllegalArgumentException("Illegal Argument Exception");
@@ -98,6 +88,7 @@ public class VectorList<E> {
      * @param value item value
      * @throws IllegalArgumentException
      */
+    @Override
     public void remove(E value) throws IllegalArgumentException {
         if (cont <= 0)
             throw new IllegalArgumentException("Illegal Argument Exception");
@@ -112,24 +103,18 @@ public class VectorList<E> {
         }
     }
 
-
     /**
-     * clear all positions from the VectorList
+     *  find the position of the item
+     * @param value item to find position
+     * @return item position or -1 if item does not exist
      */
-    public void clear() {
-        cont = 0;
-        this.elements = new Object[10];
-
-    }
-
-    /**
-     * return length
-     *
-     * @return length
-     */
-    public int size() {
-        return cont;
-
+    @Override
+    public int indexOf(E value) {
+        for (int i = 0; i < cont; i++) {
+            if (this.elements[i].equals(value))
+                return i;
+        }
+        return -1;
     }
 
     /**
@@ -137,12 +122,36 @@ public class VectorList<E> {
      * @param value item
      * @return
      */
+    @Override
     public boolean contains(E value) {
-       if(indexOf(value) == -1)
-           return false;
+        if(indexOf(value) == -1)
+            return false;
 
-       return true;
+        return true;
     }
+
+    /**
+     * return length
+     *
+     * @return length
+     */
+    @Override
+    public int size() {
+        return cont;
+
+    }
+
+    /**
+     * clear all positions from the VectorList
+     */
+    @Override
+    public void clear() {
+        cont = 0;
+        this.elements = new Object[10];
+
+    }
+
+
 
 
     //---------------------------
