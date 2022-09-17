@@ -10,6 +10,11 @@ public class ChainList<E> implements List<E>{
         lastElement = firstElement.nextItem;
     }
 
+    /**
+     * get item
+     * @param index position
+     * @return item
+     */
     @Override
     public E get(int index) throws IndexOutOfBoundsException {
         if (index >= this.cont || index < 0)
@@ -28,6 +33,11 @@ public class ChainList<E> implements List<E>{
 
     }
 
+    /**
+     * set item
+     * @param index position
+     * @param value new item value
+     */
     @Override
     public void set(int index, E value) throws IndexOutOfBoundsException{
         if (index >= this.cont || index < 0)
@@ -46,6 +56,11 @@ public class ChainList<E> implements List<E>{
 
     }
 
+    /**
+     * Adds a new item to the list
+     *
+     * @param value new item
+     */
     @Override
     public void add(E value) {
         Node adds = new Node(value);
@@ -61,18 +76,25 @@ public class ChainList<E> implements List<E>{
 
     }
 
+    /**
+     * adds an item to a position in the list
+     *
+     * @param index position
+     * @param value new item
+     */
     @Override
     public void add(int index, E value) throws IndexOutOfBoundsException{
         if (index > this.cont)
             throw new IndexOutOfBoundsException("index out of bounds exception");
 
-        this.cont++;
         Node adds = new Node(value);
 
         if (index == this.cont) {
             this.add(value);
             return;
         }
+        this.cont++;
+
         if (index == 0){
             adds.nextItem = firstElement;
             firstElement = adds;
@@ -90,6 +112,12 @@ public class ChainList<E> implements List<E>{
 
     }
 
+    /**
+     * removes a list item by position
+     *
+     * @param index position of the item that will be removed
+     * @throws IndexOutOfBoundsException
+     */
     @Override
     public void remove(int index) throws IndexOutOfBoundsException{
         if (index >= this.cont || index < 0)
@@ -114,6 +142,10 @@ public class ChainList<E> implements List<E>{
 
     }
 
+    /**
+     * removes a list item by value
+     * @param value item value
+     */
     @Override
     public void remove(E value){
 
@@ -136,6 +168,11 @@ public class ChainList<E> implements List<E>{
         currentElement.nextItem = currentElement.nextItem.nextItem;
     }
 
+    /**
+     *  find the position of the item
+     * @param value item to find position
+     * @return item position or -1 if item does not exist
+     */
     @Override
     public int indexOf(E value) {
         Node currentElement = firstElement;
@@ -150,6 +187,11 @@ public class ChainList<E> implements List<E>{
         return n;
     }
 
+    /**
+     * checks to see if the item exists
+     * @param value item
+     * @return
+     */
     @Override
     public boolean contains(E value){
         if(this.indexOf(value) == -1)
@@ -158,11 +200,19 @@ public class ChainList<E> implements List<E>{
         return true;
     }
 
+    /**
+     * return length
+     *
+     * @return length
+     */
     @Override
     public int size(){
         return this.cont;
     }
 
+    /**
+     * clear all positions from the ChainList
+     */
     @Override
     public void clear(){
         this.cont = 0;
