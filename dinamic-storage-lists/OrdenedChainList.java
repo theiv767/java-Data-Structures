@@ -1,13 +1,13 @@
 @SuppressWarnings("unchecked")
-public class ChainList<E> implements List<E>{
-    int cont = 0;
+public class OrdenedChainList<E extends Comparable<E>> implements List<E>{
+    private int cont = 0;
     private Node firstElement;
     private Node lastElement;
 
 
-    ChainList() {
-        firstElement = new Node(null);
-        lastElement = firstElement.nextItem;
+    OrdenedChainList() {
+        firstElement = null;
+        lastElement = firstElement;
     }
 
     /**
@@ -65,50 +65,28 @@ public class ChainList<E> implements List<E>{
     public void add(E value) {
         Node adds = new Node(value);
 
-        if (firstElement.value == null) {
+        if (firstElement == null) {
             firstElement = adds;
             lastElement = firstElement;
-        } else {
-            lastElement.nextItem = adds;
-            lastElement = adds;
-        }
-        this.cont++;
-
-    }
-
-    /**
-     * adds an item to a position in the list
-     *
-     * @param index position
-     * @param value new item
-     */
-    @Override
-    public void add(int index, E value) throws IndexOutOfBoundsException{
-        if (index > this.cont)
-            throw new IndexOutOfBoundsException("index out of bounds exception");
-
-        Node adds = new Node(value);
-
-        if (index == this.cont) {
-            this.add(value);
-            return;
-        }
-        this.cont++;
-
-        if (index == 0){
+        } else if(firstElement.value.compareTo(value) >= 0) { //adds antes do primeiro elemento
             adds.nextItem = firstElement;
             firstElement = adds;
-            return;
+        }else if(lastElement.value.compareTo(value) <= 0){
+            lastElement.nextItem = adds;
+            lastElement = adds;
+        }else{
+            Node currentElement = firstElement;
+            for(int i=0; i<cont-1; i++){
+                if(currentElement.nextItem.value.compareTo(value) >= 0){
+                    adds.nextItem = currentElement.nextItem;
+                    currentElement.nextItem = adds;
+                    break;
+                }
+                currentElement = currentElement.nextItem;
+            }
         }
 
-        Node currentElement = firstElement;
-        for(int i=0; i<index-1; i++){
-            currentElement = currentElement.nextItem;
-
-        }
-
-        adds.nextItem = currentElement.nextItem;
-        currentElement.nextItem = adds;
+        this.cont++;
 
     }
 
@@ -175,9 +153,12 @@ public class ChainList<E> implements List<E>{
      */
     @Override
     public int indexOf(E value) {
+        if(firstElement==null){
+            return -1;
+        }
         Node currentElement = firstElement;
         int n = 0;
-        while (currentElement.value != value) {
+        while (!currentElement.value.equals(value)) {
             n++;
             if (n >= this.cont) {
                 return -1;
@@ -225,10 +206,10 @@ public class ChainList<E> implements List<E>{
     // ------------------------
 
     private class Node {
-        Object value;
+        E value;
         Node nextItem;
 
-        Node(Object value) {
+        Node(E value) {
             this.value = value;
             nextItem = null;
         }
