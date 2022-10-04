@@ -9,7 +9,7 @@ public class StackChain<E> {
         if(lastElement == null){
             lastElement = adds;
         }else{
-            adds.previus = lastElement;
+            adds.previous = lastElement;
             lastElement = adds;
         }
     }
@@ -24,7 +24,7 @@ public class StackChain<E> {
         }
         size--;
         E aux = (E)lastElement.value;
-        lastElement = lastElement.previus;
+        lastElement = lastElement.previous;
         return aux;
     }
 
@@ -41,7 +41,7 @@ public class StackChain<E> {
 
     //---------------------------
     class Node<E>{
-        Node previus = null;
+        Node previous = null;
         E value;
         public Node(E value){
             this.value = value;
@@ -69,7 +69,7 @@ public class StackChain<E> {
             String aux = showString;
             showString = (i!=lastElement)?adds +", ":adds;
             showString += aux;
-            i = i.previus;
+            i = i.previous;
         }
         String aux = showString;
         showString = "[";
