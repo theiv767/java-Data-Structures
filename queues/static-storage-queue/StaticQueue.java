@@ -53,6 +53,13 @@ public class StaticQueue <E>{
         return null;
     }
 
+    public E peek(){
+        if(isEmpty())
+            return null;
+
+        return (E)this.elements[firstIndex];
+    }
+
     public boolean isEmpty(){
         if(size==0)
             return true;
