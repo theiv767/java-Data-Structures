@@ -116,15 +116,17 @@ public class StaticQueue <E>{
                 i=-1;
         }
         // add ultimo elemento
-        String adds = "";
-        if (elements[lastIndex].getClass() == String.class) {
-            adds += "\"";
-            adds += this.elements[lastIndex];
-            adds += "\"";
-        } else {
-            adds += this.elements[lastIndex] + "";
+        if(!isEmpty()){
+            String adds = "";
+            if (elements[lastIndex].getClass() == String.class) {
+                adds += "\"";
+                adds += this.elements[lastIndex];
+                adds += "\"";
+            } else {
+                adds += this.elements[lastIndex] + "";
+            }
+            elementsString+=adds;
         }
-        elementsString+=adds;
         elementsString += "]";
         return elementsString;
     }
